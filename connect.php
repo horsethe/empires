@@ -5,4 +5,7 @@ mysql_select_db('h53305_db',$link) or die("Не могу подключитьс�
 mysql_set_charset('utf8', $link);
 date_default_timezone_set('Europe/Moscow');
 
+function post($key, $defValue=''){
+     return isset($_POST[$key])?$_POST[$key]:$defValue;
+}
 ?>
