@@ -5,8 +5,8 @@ session_start();
 error_reporting(E_ALL);
 
 if(isset($_SESSION['id'])){
-	echo 'Вы авторизованы';
+	include('index_authorized.php');
 } else{
-	echo 'Вы не авторизованы';
+	include('index_not_authorized.php');
 }
 ?>

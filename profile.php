@@ -6,9 +6,11 @@ error_reporting(E_ALL);
 
 if(isset($_SESSION['id'])){
 	$id = $_SESSION['id'];
-	$result = mysql_query("SELECT `login`, `city` FROM `users` WHERE `id`='$id'");
-	$myrow = mysql_fetch_array($result);
-	echo "Профиль игрока ".$myrow[0]."<br>";
+	$result = mysql_query("SELECT * FROM `users` WHERE `id`='$id'");
+	$myrow = mysql_fetch_assoc($result);
+	echo "Профиль игрока ".$myrow['log']."<br>";
+	echo "Страна: ".$myrow['city']."<br>";
+	
 } else{
 	echo 'Вы не авторизованы';
 }
