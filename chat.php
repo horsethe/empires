@@ -1,9 +1,4 @@
 <?php
-header("Content-Type: text/html; charset=UTF-8");
-include 'connect.php';
-error_reporting(E_ALL);
-session_start();
-
 if(isset($_SESSION['id'])){
 	$id = $_SESSION['id'];
 	$result = mysql_query("SELECT `city` FROM `users` WHERE id='".$id."'");
@@ -19,7 +14,7 @@ if(isset($_SESSION['id'])){
 		}
 	}
 	echo '<div style="margin-left:20%; margin-right:20%">';
-	echo '<a href="/chat.php">Обновить</a></br>'.$myrow[0].'
+	echo '<a href="/chat">Обновить</a></br>'.$myrow[0].'
 	<form action="" method="POST">
 	Введите сообщение:</br>
 	<input type="text" name="message"/></br>
@@ -74,26 +69,25 @@ if(isset($_SESSION['id'])){
 	echo '</table></div>'; 
 	// Проверяем нужны ли стрелки назад 
 	if ($page != 1){
-	 $pervpage = '<a href="/chat.php?page=1">&lt;&lt;</a> <a href="/chat.php?page='.($page - 1).'">&lt;</a> '; 
+	 $pervpage = '<a href="/chat?page=1">&lt;&lt;</a> <a href="/chat?page='.($page - 1).'">&lt;</a> '; 
 	} else {
 	  $prevpage = '';
 	}
 	// Проверяем нужны ли стрелки вперед 
-	if ($page != $total) $nextpage = ' <a href="/chat.php?page='.($page + 1).'">&gt;</a> 
-                                   <a href="/chat.php?page='.$total.'">&gt;&gt;</a>'; 
+	if ($page != $total) $nextpage = ' <a href="/chat?page='.($page + 1).'">&gt;</a> 
+                                   <a href="/chat?page='.$total.'">&gt;&gt;</a>'; 
 
 	// Находим две ближайшие сhтаницы с обоих краев, если они есть 
-	if($page - 2 > 0) $page2left = ' <a href="/chat.php?page='. ($page - 2) .'">'. ($page - 2) .'</a> | '; 
-	if($page - 1 > 0) $page1left = '<a href="/chat.php?page='. ($page - 1) .'">'. ($page - 1) .'</a> | '; 
-	if($page + 2 <= $total) $page2right = ' | <a href="/chat.php?page='. ($page + 2) .'">'. ($page + 2) .'</a>'; 
-	if($page + 1 <= $total) $page1right = ' | <a href="/chat.php?page='. ($page + 1) .'">'. ($page + 1) .'</a>';
+	if($page - 2 > 0) $page2left = ' <a href="/chat?page='. ($page - 2) .'">'. ($page - 2) .'</a> | '; 
+	if($page - 1 > 0) $page1left = '<a href="/chat?page='. ($page - 1) .'">'. ($page - 1) .'</a> | '; 
+	if($page + 2 <= $total) $page2right = ' | <a href="/chat?page='. ($page + 2) .'">'. ($page + 2) .'</a>'; 
+	if($page + 1 <= $total) $page1right = ' | <a href="/chat?page='. ($page + 1) .'">'. ($page + 1) .'</a>';
 
 	// Вывод меню 
 	echo '<div style="margin-left:20%; margin-right:20%">';
 	echo $pervpage.$page2left.$page1left.'<b>'.$page.'</b>'.$page1right.$page2right.$nextpage;
 	echo '</div>';
-	echo t('_footer');
 }else{
-	header ('Location: /index.php');
+	header ('Location: /index');
 }
 ?>

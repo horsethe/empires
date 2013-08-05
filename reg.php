@@ -1,11 +1,6 @@
 <?php
-header("Content-Type: text/html; charset=UTF-8");
-include('connect.php');
-session_start();
-error_reporting(E_ALL);
-
 if(isset($_SESSION['id'])){
-	header('Location: /index.php');
+	header('Location: /index');
 	exit;
 }
 $log = post('log', 'Гость');

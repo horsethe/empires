@@ -1,6 +1,6 @@
 <?php
-echo '<a href="/login.php">Вход</a><br>
+echo '<a href="/login">Вход</a><br>
 или<br>
-<a href="/reg.php">Регистрация</a><br>';
+<a href="/reg">Регистрация</a><br>';
 
 ?>
