@@ -1,6 +1,5 @@
 <?php
 echo 'Главная<br>
 <a href="/profile.php">Профиль</a><br>
-<a href="/exit.php">Выход</a>';
-
+<a href="/chat.php">Чат</a>';
 ?>

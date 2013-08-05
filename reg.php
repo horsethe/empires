@@ -45,18 +45,14 @@ if($_POST){
 	}	
 }
 
+$data = array(
+	'log'=>$log,
+	'pass1'=>$pass1,
+	'city'=>$city,
+);
 
+$data['usersCount'] = DB::get_value('SELECT count(*) FROM `users`');
+
+echo t('reg', $data);
+echo t('_footer');
 ?>
-<form action="" method="POST">
-<b>Регистрация:</b></br>
-Логин</br>
-(может содержать от 2 до 16 русских или английских букв,цифр, знаков _,-,!):</br>
-<input type="text" name="log" value="<?php echo htmlspecialchars($log)?>"/></br>
-Пароль</br>
-(может содержать от 6 до 16 английских букв,цифр, знаков _,-,!):</br>
-<input type="password" name="pass" value="<?php echo htmlspecialchars($pass1)?>"/></br>
-Название страны</br>
-(может содержать от 2 до 16 русских или английских букв,цифр, знаков _,-,!):</br>
-<input type="text" name="city" value="<?php echo htmlspecialchars($city)?>"/></br>
-<input type="submit" name="ok" value="Регистрация"/></br>
-</form>
