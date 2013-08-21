@@ -5,7 +5,17 @@ if(isset($_SESSION['id'])){
 }
 $log = post('log', 'Гость');
 $pass1 = post('pass');
-$city = post('city');	
+$city = post('city');
+$rep_trader = 0;
+$rep_pirate = 0;
+$rep_warrior = 0;
+switch (post('speciality')){
+	case 'trader':$rep_trader = 1000; $location = 1;break;
+	case 'pirate':$rep_pirate = 1000; $location = 2;break;
+	case 'warrior':
+	default: $rep_warrior = 1000; $location = 3;break;
+}
+
 if($_POST){
 	$myrow = DB::get_row('SELECT `id` FROM `users` WHERE `log` = "'.esc($log).'"');
 	$myrow1 = DB::get_row('SELECT `id` FROM `users` WHERE `city` = "'.esc($city).'"');
@@ -24,13 +34,23 @@ if($_POST){
 		} elseif(!$city_valid){
 			throw new Exception('Неверное название страны!');
 		}
-		$pass = md5($pass1);
+		$pass = md5(PASSWORD_SALT.$pass1);
 		$reg_data = date("j-n-Y");
+		$insert_db = array(
+			'log' => $log,
+			'pass' => $pass,
+			'reg_data' => $reg_data,
+			'city' => $city,
+			'rep_trader' => $rep_trader,
+			'rep_pirate' => $rep_pirate,
+			'rep_warrior' => $rep_warrior,
+			'money1' => getCfg('reg_user_money1'),
+			'money2' => getCfg('reg_user_money2'),
+			'location' => $location,
+		);
 		$_SESSION['id'] = DB::get_id('
-			INSERT INTO `users`(`log`, `pass`, `reg_data`, `city`) 
-			VALUES ("'.esc($log).'","'.esc($pass).'","'.$reg_data.'","'.esc($city).'")
-		');
-		header('Location: /index.php');
+			INSERT INTO `users`'.DB::arr2insert($insert_db));
+		header('Location: /index');
 		exit;
 		
 	} catch(Exception $e){
@@ -49,5 +69,5 @@ $data = array(
 $data['usersCount'] = DB::get_value('SELECT count(*) FROM `users`');
 
 echo t('reg', $data);
-echo t('_footer');
+
 ?>

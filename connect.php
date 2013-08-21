@@ -1,8 +1,11 @@
 <?php
 header("Content-Type: text/html; charset=UTF-8");
 define('APP_DIR', __DIR__);
-$link=mysql_connect('localhost','h53305_belka','30011991') or die("Не могу подключиться к серверу БД(1)");
-mysql_select_db('h53305_db',$link) or die("Не могу подключиться к БД");
+include ('balance.php');
+include ('config.php');
+define('PASSWORD_SALT', 'p2n4v3j');
+$link=mysql_connect(getCfg('db_host'),getCfg('db_login'),getCfg('db_password')) or die("Не могу подключиться к серверу БД(1)");
+mysql_select_db(getCfg('db_name'),$link) or die("Не могу подключиться к БД");
 mysql_set_charset('utf8', $link);
 date_default_timezone_set('Europe/Moscow');
 spl_autoload_register(function ($class) {
@@ -22,4 +25,12 @@ function t($templateName, $data=array()){
 	ob_start();
 	include(APP_DIR.'/templates/'.$templateName.'.php');
 	return ob_get_clean();
+}
+function getCfg($key){
+	global $config;
+	if (isset($config[$key])){
+		return $config[$key];
+	} else {
+		return NULL;
+	}
 }

@@ -6,7 +6,7 @@ if(isset($_SESSION['id'])){
 		$log = post('log');
 		$pass1 = post('pass');
 	if($_POST){
-			$pass = md5($pass1);
+			$pass = md5(PASSWORD_SALT.$pass1);
 			$result = mysql_query("SELECT `id` FROM `users` WHERE `log`='$log' AND `pass`='$pass'");
 			$myrow = mysql_fetch_array($result);
 		if($myrow){
